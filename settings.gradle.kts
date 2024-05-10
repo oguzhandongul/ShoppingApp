@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "ShoppingApp"
 include(":app")
- 
+include(":features")

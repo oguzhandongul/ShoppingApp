@@ -68,6 +68,7 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 
+    debugImplementation(libs.leak.canary)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
