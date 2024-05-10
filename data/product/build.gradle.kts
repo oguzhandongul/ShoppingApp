@@ -35,4 +35,7 @@ android {
 dependencies {
 
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.moshi)
+    implementation(libs.moshi.adapter)
+    implementation(libs.moshi.kotlin)
 }

@@ -73,6 +73,9 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     debugImplementation(libs.leak.canary)
+    debugImplementation(libs.moshi)
+    debugImplementation(libs.moshi.adapter)
+    debugImplementation(libs.moshi.kotlin)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
