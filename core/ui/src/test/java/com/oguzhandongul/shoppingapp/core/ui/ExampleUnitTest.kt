@@ -1,4 +1,4 @@
-package com.oguzhandongul.shoppingapp.product
+package com.oguzhandongul.shoppingapp.core.ui
 
 import org.junit.Test
 
