@@ -1,4 +1,4 @@
-package com.oguzhandongul.shoppingapp.ui.theme
+package com.oguzhandongul.shoppingapp.core.ui.theme
 
 import android.app.Activity
 import android.os.Build

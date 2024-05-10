@@ -1,4 +1,4 @@
-package com.oguzhandongul.shoppingapp.ui.theme
+package com.oguzhandongul.shoppingapp.core.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
