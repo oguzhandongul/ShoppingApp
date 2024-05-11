@@ -1,4 +1,4 @@
-package com.oguzhandongul.shoppingapp
+package com.oguzhandongul.shoppingapp.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.oguzhandongul.shoppingapp.core.ui.theme.ShoppingAppTheme
 import com.oguzhandongul.shoppingapp.core.util.utils.JsonFileParser
+import com.oguzhandongul.shoppingapp.navigation.MainNavigation
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -30,25 +31,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    MainNavigation()
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    ShoppingAppTheme {
-        Greeting("Android")
     }
 }

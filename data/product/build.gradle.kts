@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hiltPlugin)
 }
 
 android {
@@ -30,6 +32,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    hilt {
+        enableAggregatingTask = true
+    }
 }
 
 dependencies {
@@ -38,4 +43,6 @@ dependencies {
     implementation(libs.moshi)
     implementation(libs.moshi.adapter)
     implementation(libs.moshi.kotlin)
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
 }
