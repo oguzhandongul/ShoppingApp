@@ -1,6 +1,7 @@
 package com.oguzhandongul.shoppingapp.productlist.di
 
 import com.oguzhandongul.shoppingapp.core.util.utils.JsonFileParser
+import com.oguzhandongul.shoppingapp.product.local.ProductDao
 import com.oguzhandongul.shoppingapp.productlist.data.ProductListRepositoryImpl
 import dagger.Module
 import dagger.Provides
@@ -13,6 +14,6 @@ import javax.inject.Singleton
 object ProductListModule {
     @Singleton
     @Provides
-    fun provideProductsRepo(jsonFileParser: JsonFileParser) =
-        ProductListRepositoryImpl(jsonFileParser)
+    fun provideProductsRepo(jsonFileParser: JsonFileParser, productDao: ProductDao) =
+        ProductListRepositoryImpl(jsonFileParser = jsonFileParser, productDao = productDao)
 }

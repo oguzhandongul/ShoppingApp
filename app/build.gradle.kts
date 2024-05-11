@@ -58,6 +58,7 @@ dependencies {
 
     implementation(project(":core:ui"))
     implementation(project(":core:util"))
+    implementation(project(":core:data"))
     implementation(project(":data:product"))
     implementation(project(":features:productlist"))
 
@@ -70,6 +71,10 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
+
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room)
+    ksp(libs.androidx.room.compiler)
 
     implementation(libs.hilt.navigation.compose)
     implementation(libs.hilt.android)

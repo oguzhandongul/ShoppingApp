@@ -2,8 +2,8 @@ package com.oguzhandongul.shoppingapp.productlist.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.oguzhandongul.shoppingapp.core.util.utils.ResourceHelper
-import com.oguzhandongul.shoppingapp.productlist.R
+import com.oguzhandongul.shoppingapp.core.util.utils.Resource
+import com.oguzhandongul.shoppingapp.productlist.domain.usecase.CacheProductListUseCase
 import com.oguzhandongul.shoppingapp.productlist.domain.usecase.GetProductListUseCase
 import com.oguzhandongul.shoppingapp.productlist.presentation.uistates.ProductListUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,25 +16,38 @@ import javax.inject.Inject
 @HiltViewModel
 class ProductListViewModel @Inject constructor(
     private val getProductListUseCase: GetProductListUseCase,
-    private val resourceHelper: ResourceHelper
+    private val cacheProductListUseCase: CacheProductListUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<ProductListUiState>(ProductListUiState.Loading)
     val uiState: StateFlow<ProductListUiState> = _uiState.asStateFlow()
 
     init {
-        loadProductsData()
+        cacheProducts()
+    }
+
+    private fun cacheProducts() {
+        viewModelScope.launch {
+            cacheProductListUseCase().collect { resource ->
+                when (resource) {
+                    is Resource.Loading -> _uiState.value = ProductListUiState.Loading
+                    is Resource.Success -> loadProductsData()
+                    is Resource.Error -> _uiState.value = ProductListUiState.Error(resource.message!!)
+                }
+            }
+        }
     }
 
     private fun loadProductsData() {
         viewModelScope.launch {
-            _uiState.value = ProductListUiState.Loading
-            val result = getProductListUseCase.invoke().getOrNull()
-            if (result != null) {
-                _uiState.value = ProductListUiState.Success(result)
-            } else {
-                _uiState.value =
-                    ProductListUiState.Error(resourceHelper.getString(R.string.error_loading_list))
+            getProductListUseCase().collect { resource ->
+                _uiState.value = when (resource) {
+                    is Resource.Loading -> ProductListUiState.Loading
+                    is Resource.Success -> ProductListUiState.Success(resource.data ?: emptyList())
+                    is Resource.Error -> ProductListUiState.Error(
+                        resource.message ?: "Unknown error"
+                    )
+                }
             }
         }
     }

@@ -38,7 +38,9 @@ android {
 }
 
 dependencies {
-
+    implementation(libs.androidx.room)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.moshi)
     implementation(libs.moshi.adapter)
