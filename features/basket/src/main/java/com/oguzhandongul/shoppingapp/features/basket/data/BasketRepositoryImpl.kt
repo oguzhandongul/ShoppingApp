@@ -7,16 +7,23 @@ import com.oguzhandongul.shoppingapp.product.repository.BasketRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class BasketRepositoryImpl @Inject constructor(private val basketDao: BasketDao) : BasketRepository {
+class BasketRepositoryImpl @Inject constructor(private val basketDao: BasketDao) :
+    BasketRepository {
     override fun getBasketItems(): Flow<List<BasketItem>> = basketDao.getAllBasketItems()
 
     override suspend fun addToBasket(product: Product) {
-        val basketItem = BasketItem(productId = product.id, quantity = 1)
-        basketDao.insertBasketItem(basketItem)
+        val existingBasketItem = basketDao.getBasketItemByProductId(product.id)
+        if (existingBasketItem != null) {
+            // Update existing item's quantity
+            basketDao.updateBasketItem(existingBasketItem.copy(quantity = existingBasketItem.quantity + 1))
+        } else {
+            // Insert a new basket item with the product details
+            basketDao.insertBasketItem(BasketItem(productId = product.id, quantity = 1, product = product))
+        }
     }
 
-    override suspend fun removeFromBasket(product: Product) {
-        val basketItem = basketDao.getBasketItemByProductId(product.id)
+    override suspend fun removeFromBasket(productId: String) {
+        val basketItem = basketDao.getBasketItemByProductId(productId)
         if (basketItem != null) {
             basketDao.deleteBasketItem(basketItem)
         }

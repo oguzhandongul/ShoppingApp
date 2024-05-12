@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.oguzhandongul.shoppingapp.core.util.utils.Screen
+import com.oguzhandongul.shoppingapp.features.basket.presentation.ui.BasketRoute
 import com.oguzhandongul.shoppingapp.productlist.presentation.ui.ProductListRoute
 
 
@@ -20,12 +21,14 @@ fun MainNavigation(
                     navController.navigate("details/$id")
                 },
                 onGoToBasket = {
-                    navController.navigate("basket/$id")
+                    navController.navigate(Screen.Basket.route)
                 }
             )
         }
 //        composable(Screen.ProductDetail.route) { //TODO }
-//        composable(Screen.Basket.route) {  //TODO }
+        composable(Screen.Basket.route) {
+            BasketRoute(onBackClick = {})
 
+        }
     }
 }

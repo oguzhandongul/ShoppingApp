@@ -7,6 +7,6 @@ import kotlinx.coroutines.flow.Flow
 interface BasketRepository {
     fun getBasketItems(): Flow<List<BasketItem>>
     suspend fun addToBasket(product: Product)
-    suspend fun removeFromBasket(product: Product)
+    suspend fun removeFromBasket(productId: String)
     suspend fun clearBasket()
 }
