@@ -33,7 +33,9 @@ fun MainNavigation(
             arguments = listOf(navArgument("productId") { type = NavType.StringType })
         ) { backStackEntry ->
             val productId = backStackEntry.arguments?.getString("productId")
-            ProductDetailRoute(productId)
+            ProductDetailRoute(
+                productId = productId,
+                onBackClick = { navController.popBackStack() })
         }
         composable(Screen.Cart.route) {
             CartRoute(onBackClick = { navController.popBackStack() })

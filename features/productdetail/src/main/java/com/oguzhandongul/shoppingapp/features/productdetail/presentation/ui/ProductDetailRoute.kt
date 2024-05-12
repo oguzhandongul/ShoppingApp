@@ -37,6 +37,7 @@ import com.oguzhandongul.shoppingapp.product.model.Product
 @Composable
 fun ProductDetailRoute(
     productId: String?,
+    onBackClick: () -> Unit,
     viewModel: ProductDetailViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
@@ -44,7 +45,7 @@ fun ProductDetailRoute(
     ProductDetailScreen(
         state = state,
         onAddToCartClick = { viewModel.onAddToCartClicked() },
-        onBackClick = viewModel::onBackClicked,
+        onBackClick = onBackClick,
         modifier = Modifier.fillMaxSize()
     )
 }
