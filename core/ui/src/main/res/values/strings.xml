@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="label_ok">OK</string>
+    <string name="label_cancel">CANCEL</string>
+    <string name="label_yes">YES</string>
+    <string name="label_no">NO</string>
+</resources>
