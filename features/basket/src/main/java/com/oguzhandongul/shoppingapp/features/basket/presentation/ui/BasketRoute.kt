@@ -22,14 +22,21 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -64,6 +71,24 @@ internal fun BasketScreen(
     onRemoveItem: (BasketItem) -> Unit,
     modifier: Modifier = Modifier
 ) {
+
+    var totalPrice by remember { mutableStateOf(0.0) }
+    var totalItemCount by remember { mutableStateOf(0) }
+
+    LaunchedEffect(state) {
+        when (state) {
+            is BasketUiState.Success -> {
+                totalPrice = state.basketItems.sumOf { it.product.price.value * it.quantity }
+                totalItemCount = state.basketItems.sumOf { it.quantity }
+            }
+
+            BasketUiState.Empty -> {
+                totalPrice = 0.0
+                totalItemCount = 0
+            }
+        }
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -74,6 +99,9 @@ internal fun BasketScreen(
                     }
                 }
             )
+        },
+        bottomBar = {
+            BasketBottomBar(totalPrice, totalItemCount)
         }
     ) { paddingValues ->
         when (state) {
@@ -83,6 +111,26 @@ internal fun BasketScreen(
                 onRemoveItem = onRemoveItem,
                 modifier = Modifier.padding(paddingValues)
             )
+        }
+    }
+}
+
+@Composable
+private fun BasketBottomBar(totalPrice: Double, totalItemCount: Int) {
+    Surface(
+        modifier = Modifier.shadow(elevation = Dimensions.medium),
+        color = MaterialTheme.colorScheme.surface,
+        contentColor = MaterialTheme.colorScheme.onSurface
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(Dimensions.medium),
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.End
+        ) {
+            Text("Total Price: ${totalPrice} kr")
+            Text("Total Items: $totalItemCount")
         }
     }
 }

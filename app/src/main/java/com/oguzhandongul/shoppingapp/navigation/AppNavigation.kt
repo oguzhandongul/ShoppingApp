@@ -27,7 +27,7 @@ fun MainNavigation(
         }
 //        composable(Screen.ProductDetail.route) { //TODO }
         composable(Screen.Basket.route) {
-            BasketRoute(onBackClick = {})
+            BasketRoute(onBackClick = { navController.popBackStack() })
 
         }
     }
