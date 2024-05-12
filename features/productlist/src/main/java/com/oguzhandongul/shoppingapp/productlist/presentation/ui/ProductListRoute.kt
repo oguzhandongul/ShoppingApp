@@ -45,19 +45,19 @@ import com.oguzhandongul.shoppingapp.productlist.presentation.viewmodels.Product
 @Composable
 fun ProductListRoute(
     onGoToItem: (String) -> Unit,
-    onGoToBasket: () -> Unit,
+    onGoToCart: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ProductListViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
-    val basketItemCount by viewModel.basketItemCount.collectAsState(initial = 0) // Observe item count
+    val cartItemCount by viewModel.cartItemCount.collectAsState(initial = 0) // Observe item count
 
     ListScreen(
         state = state,
         onGoToItem = onGoToItem,
-        onBasketItem = viewModel::addToBasket,
-        onGoToBasket = onGoToBasket, // Pass the callback
-        basketItemCount = basketItemCount, // Pass the count
+        onCartItem = viewModel::addToCart,
+        onGoToCart = onGoToCart, // Pass the callback
+        cartItemCount = cartItemCount, // Pass the count
         modifier = modifier
     )
 }
@@ -66,9 +66,9 @@ fun ProductListRoute(
 internal fun ListScreen(
     state: ProductListUiState,
     onGoToItem: (String) -> Unit,
-    onBasketItem: (Product) -> Unit,
-    basketItemCount: Int,
-    onGoToBasket: () -> Unit,
+    onCartItem: (Product) -> Unit,
+    cartItemCount: Int,
+    onGoToCart: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold { paddingValues ->
@@ -82,16 +82,16 @@ internal fun ListScreen(
                 is ProductListUiState.Success -> Content(
                     state.data,
                     onGoToItem,
-                    onBasketItem,
+                    onCartItem,
                     modifier = Modifier.fillMaxSize() // Make content fill the remaining space
                 )
 
                 is ProductListUiState.Error -> ErrorView(exception = Exception()) { } // Handle error state
             }
 
-            BasketFloatingActionButton(
-                itemCount = basketItemCount,
-                onClick = onGoToBasket,
+            CartFloatingActionButton(
+                itemCount = cartItemCount,
+                onClick = onGoToCart,
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
                     .padding(Dimensions.medium)
@@ -105,7 +105,7 @@ internal fun ListScreen(
 internal fun Content(
     items: List<Product>,
     onGoToItem: (String) -> Unit,
-    onBasketItem: (Product) -> Unit,
+    onCartItem: (Product) -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -120,7 +120,7 @@ internal fun Content(
             modifier = modifier.padding(paddingValues)
         ) {
             items(items.size) { index ->
-                ProductCard(items[index], onBasketItem, modifier = Modifier
+                ProductCard(items[index], onCartItem, modifier = Modifier
                     .clickable {
                         onGoToItem(items[index].id)
                     }
@@ -131,7 +131,7 @@ internal fun Content(
 }
 
 @Composable
-fun ProductCard(product: Product, onBasketItem: (Product) -> Unit, modifier: Modifier) {
+fun ProductCard(product: Product, onCartItem: (Product) -> Unit, modifier: Modifier) {
     Card(
         modifier = modifier
             .padding(Dimensions.small)
@@ -159,10 +159,10 @@ fun ProductCard(product: Product, onBasketItem: (Product) -> Unit, modifier: Mod
                     fontWeight = FontWeight.Bold
                 )
 
-                // Add to Basket Button
+                // Add to Cart Button
                 Spacer(modifier = Modifier.height(Dimensions.medium))
-                Button(onClick = { onBasketItem(product) }) {
-                    Text(stringResource(id = R.string.label_add_to_basket))
+                Button(onClick = { onCartItem(product) }) {
+                    Text(stringResource(id = R.string.label_add_to_cart))
                 }
             }
         }
@@ -170,7 +170,7 @@ fun ProductCard(product: Product, onBasketItem: (Product) -> Unit, modifier: Mod
 }
 
 @Composable
-fun BasketFloatingActionButton(
+fun CartFloatingActionButton(
     itemCount: Int,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -181,9 +181,9 @@ fun BasketFloatingActionButton(
         icon = {
             Icon(
                 imageVector = Icons.Default.ShoppingCart,
-                contentDescription = "Shopping Basket"
+                contentDescription = "Shopping Cart"
             )
         },
-        text = { Text("Basket ($itemCount)") } // Include item count in the text
+        text = { Text("Cart ($itemCount)") } // Include item count in the text
     )
 }

@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.oguzhandongul.shoppingapp.core.util.utils.Resource
 import com.oguzhandongul.shoppingapp.product.model.Product
-import com.oguzhandongul.shoppingapp.productlist.domain.usecase.AddToBasketUseCase
+import com.oguzhandongul.shoppingapp.productlist.domain.usecase.AddToCartUseCase
 import com.oguzhandongul.shoppingapp.productlist.domain.usecase.CacheProductListUseCase
-import com.oguzhandongul.shoppingapp.productlist.domain.usecase.GetBasketItemCountUseCase
+import com.oguzhandongul.shoppingapp.productlist.domain.usecase.GetCartItemCountUseCase
 import com.oguzhandongul.shoppingapp.productlist.domain.usecase.GetProductListUseCase
 import com.oguzhandongul.shoppingapp.productlist.presentation.uistates.ProductListUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,14 +22,14 @@ import javax.inject.Inject
 class ProductListViewModel @Inject constructor(
     private val getProductListUseCase: GetProductListUseCase,
     private val cacheProductListUseCase: CacheProductListUseCase,
-    private val addToBasketUseCase: AddToBasketUseCase,
-    private val getBasketUseCase: GetBasketItemCountUseCase
+    private val addToCartUseCase: AddToCartUseCase,
+    private val getCarttUseCase: GetCartItemCountUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<ProductListUiState>(ProductListUiState.Loading)
     val uiState: StateFlow<ProductListUiState> = _uiState.asStateFlow()
 
-    val basketItemCount: StateFlow<Int> = getBasketUseCase().stateIn(
+    val cartItemCount: StateFlow<Int> = getCarttUseCase().stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(5000),
         0
@@ -66,9 +66,9 @@ class ProductListViewModel @Inject constructor(
     }
 
 
-    fun addToBasket(product: Product) {
+    fun addToCart(product: Product) {
         viewModelScope.launch {
-            addToBasketUseCase(product).collect { resource ->
+            addToCartUseCase(product).collect { resource ->
                 when (resource) {
                     is Resource.Success -> {
                         // Potentially show a success message here or update UI accordingly

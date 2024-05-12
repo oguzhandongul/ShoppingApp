@@ -8,7 +8,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import com.oguzhandongul.shoppingapp.product.R
-import com.oguzhandongul.shoppingapp.product.local.BasketDao
 import com.oguzhandongul.shoppingapp.product.local.ProductDao
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
