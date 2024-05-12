@@ -14,7 +14,7 @@ interface BasketDao {
     @Query("SELECT * FROM basket_items")
     fun getAllBasketItems(): Flow<List<BasketItem>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE) // Or choose your conflict resolution strategy
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertBasketItem(basketItem: BasketItem)
 
     @Update

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.oguzhandongul.shoppingapp.features.basket.domain.ClearBasketUseCase
 import com.oguzhandongul.shoppingapp.features.basket.domain.GetBasketItemsUseCase
 import com.oguzhandongul.shoppingapp.features.basket.domain.RemoveFromBasketUseCase
+import com.oguzhandongul.shoppingapp.features.basket.domain.UpdateBasketItemQuantityUseCase
 import com.oguzhandongul.shoppingapp.features.basket.presentation.uistates.BasketUiState
 import com.oguzhandongul.shoppingapp.product.model.BasketItem
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,6 +20,7 @@ import javax.inject.Inject
 class BasketViewModel @Inject constructor(
     private val getBasketItemsUseCase: GetBasketItemsUseCase,
     private val removeFromBasketUseCase: RemoveFromBasketUseCase,
+    private val updateBasketItemQuantityUseCase: UpdateBasketItemQuantityUseCase,
     private val clearBasketUseCase: ClearBasketUseCase
 ) : ViewModel() {
 
@@ -35,6 +37,16 @@ class BasketViewModel @Inject constructor(
     fun removeFromBasket(basketItem: BasketItem) {
         viewModelScope.launch {
             removeFromBasketUseCase(basketItem.productId)
+        }
+    }
+
+    fun updateBasketItemQuantity(basketItem: BasketItem, newQuantity: Int) {
+        viewModelScope.launch {
+            if (newQuantity > 0) {
+                updateBasketItemQuantityUseCase(basketItem.copy(quantity = newQuantity))
+            } else {
+                removeFromBasketUseCase(basketItem.productId) // Remove if quantity is 0
+            }
         }
     }
 

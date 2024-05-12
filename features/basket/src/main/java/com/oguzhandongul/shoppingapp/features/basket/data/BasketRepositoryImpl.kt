@@ -29,7 +29,11 @@ class BasketRepositoryImpl @Inject constructor(private val basketDao: BasketDao)
         }
     }
 
+    override suspend fun updateBasketItemQuantity(basketItem: BasketItem) {
+        basketDao.updateBasketItem(basketItem)
+    }
+
     override suspend fun clearBasket() {
-        //TODO basketDao.deleteAllBasketItems()
+        basketDao.deleteAllBasketItems()
     }
 }
