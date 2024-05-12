@@ -1,9 +1,11 @@
 package com.oguzhandongul.shoppingapp.di
 
 import android.content.Context
+import com.oguzhandongul.shoppingapp.features.basket.data.BasketRepositoryImpl
 import com.oguzhandongul.shoppingapp.product.local.AppDatabase
 import com.oguzhandongul.shoppingapp.product.local.BasketDao
 import com.oguzhandongul.shoppingapp.product.local.ProductDao
+import com.oguzhandongul.shoppingapp.product.repository.BasketRepository
 import com.oguzhandongul.shoppingapp.product.repository.ProductRepository
 import com.oguzhandongul.shoppingapp.productlist.data.ProductListRepositoryImpl
 import dagger.Binds
@@ -36,4 +38,6 @@ abstract class AppModule {
     }
     @Binds
     abstract fun bindProductRepository(productListRepositoryImpl: ProductListRepositoryImpl): ProductRepository
+    @Binds
+    abstract fun bindBasketRepository(basket: BasketRepositoryImpl): BasketRepository
 }
