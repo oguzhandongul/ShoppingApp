@@ -16,7 +16,6 @@ private const val ANIM_DURATION_CROSS_FADE = 1000
 fun CoilImage(url: String, modifier: Modifier = Modifier) {
     val request = ImageRequest.Builder(LocalContext.current)
         .data(url)
-        .crossfade(ANIM_DURATION_CROSS_FADE)
         .placeholder(R.drawable.placeholder_image_24)
         .error(R.drawable.placeholder_image_24)
         .memoryCachePolicy(CachePolicy.ENABLED)

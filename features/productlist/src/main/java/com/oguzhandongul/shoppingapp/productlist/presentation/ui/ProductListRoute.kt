@@ -1,5 +1,7 @@
 package com.oguzhandongul.shoppingapp.productlist.presentation.ui
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -137,7 +139,6 @@ fun ProductCard(product: Product, onCartItem: (Product) -> Unit, modifier: Modif
             .padding(Dimensions.small)
             .background(color = Color.White)
             .fillMaxWidth()
-            .clickable {}
     ) {
         Column(
             modifier = Modifier

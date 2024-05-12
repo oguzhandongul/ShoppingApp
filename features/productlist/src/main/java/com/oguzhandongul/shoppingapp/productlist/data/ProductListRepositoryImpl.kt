@@ -41,4 +41,8 @@ class ProductListRepositoryImpl @Inject constructor(
             }
         }
     }
+
+    override suspend fun getProductById(productId: String): Product? = withContext(Dispatchers.IO) {
+        productDao.getProductById(productId)
+    }
 }
