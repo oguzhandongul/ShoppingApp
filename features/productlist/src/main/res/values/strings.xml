@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="error_loading_list">Failed to load product list</string>
+    <string name="error_loading_detail">Failed to load product detail</string>
+    <string name="label_add_to_basket">Add to Basket</string>
+    <string name="title_product_list">Product List</string>
+</resources>
