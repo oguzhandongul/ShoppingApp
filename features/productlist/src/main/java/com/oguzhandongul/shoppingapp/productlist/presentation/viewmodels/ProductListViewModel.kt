@@ -3,6 +3,7 @@ package com.oguzhandongul.shoppingapp.productlist.presentation.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.oguzhandongul.shoppingapp.core.util.utils.Resource
+import com.oguzhandongul.shoppingapp.product.model.Product
 import com.oguzhandongul.shoppingapp.productlist.domain.usecase.CacheProductListUseCase
 import com.oguzhandongul.shoppingapp.productlist.domain.usecase.GetProductListUseCase
 import com.oguzhandongul.shoppingapp.productlist.presentation.uistates.ProductListUiState
@@ -52,7 +53,7 @@ class ProductListViewModel @Inject constructor(
         }
     }
 
-    fun addToBasket(id: String, isAdded: Boolean) {
+    fun addToBasket(product: Product, isAdded: Boolean) {
         viewModelScope.launch {
             //TODO add to basket
         }

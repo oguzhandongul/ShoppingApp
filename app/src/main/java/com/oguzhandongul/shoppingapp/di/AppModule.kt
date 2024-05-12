@@ -2,6 +2,7 @@ package com.oguzhandongul.shoppingapp.di
 
 import android.content.Context
 import com.oguzhandongul.shoppingapp.product.local.AppDatabase
+import com.oguzhandongul.shoppingapp.product.local.BasketDao
 import com.oguzhandongul.shoppingapp.product.local.ProductDao
 import com.oguzhandongul.shoppingapp.product.repository.ProductRepository
 import com.oguzhandongul.shoppingapp.productlist.data.ProductListRepositoryImpl
@@ -27,6 +28,10 @@ abstract class AppModule {
         @Provides
         fun provideProductDao(appDatabase: AppDatabase): ProductDao {
             return appDatabase.productDao()
+        }
+        @Provides
+        fun provideBasketDao(appDatabase: AppDatabase): BasketDao {
+            return appDatabase.basketDao()
         }
     }
     @Binds

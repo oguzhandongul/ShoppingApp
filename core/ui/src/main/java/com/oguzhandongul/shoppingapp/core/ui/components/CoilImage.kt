@@ -3,6 +3,7 @@ package com.oguzhandongul.shoppingapp.core.ui.components
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import coil.compose.rememberAsyncImagePainter
 import coil.request.CachePolicy
@@ -27,6 +28,7 @@ fun CoilImage(url: String, modifier: Modifier = Modifier) {
     Image(
         painter = painter,
         contentDescription = null,
-        modifier = modifier
+        modifier = modifier,
+        contentScale = ContentScale.Crop
     )
 }

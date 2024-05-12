@@ -12,7 +12,7 @@
 				"color": "white"
 			},
 			"type": "chair",
-			"imageUrl": "https://shop.static.ingka.ikea.com/PIAimages/0462849_PE608354_S4.JPG"
+			"imageUrl": "https://www.ikea.com/nl/en/images/products/henriksdal-chair-dark-brown-dansbo-dark-grey__0870532_pe642752_s5.jpg"
 		},
 		{
 			"id": "2",
@@ -26,7 +26,7 @@
 				"color": "beige"
 			},
 			"type": "couch",
-			"imageUrl": "https://shop.static.ingka.ikea.com/PIAimages/0667779_PE714073_S4.JPG"
+			"imageUrl": "https://i.etsystatic.com/15610705/r/il/425e4a/4120911516/il_1588xN.4120911516_g8o8.jpg"
 		}, {
 			"id": "3",
 			"name":  "Nyhamn",
@@ -53,7 +53,7 @@
 				"color": "black"
 			},
 			"type": "couch",
-			"imageUrl": "https://shop.static.ingka.ikea.com/PIAimages/0320948_PE514802_S4.JPG"
+			"imageUrl": "https://www.ikea.com/sa/en/images/products/landskrona-3-seat-sofa-gunnared-dark-grey-wood__0602117_pe680186_s5.jpg?f=m"
 		},
 		{	
 			"id": "5",
@@ -67,7 +67,7 @@
 				"color": "dark blue"
 			},
 			"type": "chair",
-			"imageUrl": "https://shop.static.ingka.ikea.com/PIAimages/0727322_PE735594_S4.JPG"
+			"imageUrl": "https://www.ikea.com/sa/en/images/products/odger-chair-anthracite__0739669_pe741828_s5.jpg?f=m"
 		},
 		{	
 			"id": "6",

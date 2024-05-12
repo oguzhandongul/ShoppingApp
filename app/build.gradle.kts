@@ -58,7 +58,6 @@ dependencies {
 
     implementation(project(":core:ui"))
     implementation(project(":core:util"))
-    implementation(project(":core:data"))
     implementation(project(":data:product"))
     implementation(project(":features:productlist"))
 
