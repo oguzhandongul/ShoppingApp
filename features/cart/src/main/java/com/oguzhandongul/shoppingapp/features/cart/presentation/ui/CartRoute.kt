@@ -174,15 +174,15 @@ private fun CartBottomBar(totalPrice: Double, totalItemCount: Int) {
         color = MaterialTheme.colorScheme.surface,
         contentColor = MaterialTheme.colorScheme.onSurface
     ) {
-        Column(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(Dimensions.medium),
-            verticalArrangement = Arrangement.SpaceBetween,
-            horizontalAlignment = Alignment.End
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("Total Price: $totalPrice kr")
-            Text("Total Items: $totalItemCount")
+            Text("Total Price:")
+            Text("$totalPrice kr")
         }
     }
 }

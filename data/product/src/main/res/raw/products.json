@@ -12,7 +12,7 @@
 				"color": "white"
 			},
 			"type": "chair",
-			"imageUrl": "https://www.ikea.com/nl/en/images/products/henriksdal-chair-dark-brown-dansbo-dark-grey__0870532_pe642752_s5.jpg"
+			"imageUrl": "https://www.ikea.com/nl/en/images/products/henriksdal-chair-dark-brown-dansbo-dark-grey__0870532_pe642752_s5.jpg?f=s"
 		},
 		{
 			"id": "2",
@@ -26,7 +26,7 @@
 				"color": "beige"
 			},
 			"type": "couch",
-			"imageUrl": "https://i.etsystatic.com/15610705/r/il/425e4a/4120911516/il_1588xN.4120911516_g8o8.jpg"
+			"imageUrl": "https://www.ikea-club.org/cache/zoo_images/5/5eb416493ae0d3e4baf5b2b09089e220.jpg"
 		}, {
 			"id": "3",
 			"name":  "Nyhamn",
@@ -53,7 +53,7 @@
 				"color": "black"
 			},
 			"type": "couch",
-			"imageUrl": "https://www.ikea.com/sa/en/images/products/landskrona-3-seat-sofa-gunnared-dark-grey-wood__0602117_pe680186_s5.jpg?f=m"
+			"imageUrl": "https://www.ikea.com/sa/en/images/products/landskrona-3-seat-sofa-gunnared-dark-grey-wood__0602117_pe680186_s5.jpg?f=s"
 		},
 		{	
 			"id": "5",
@@ -67,7 +67,7 @@
 				"color": "dark blue"
 			},
 			"type": "chair",
-			"imageUrl": "https://www.ikea.com/sa/en/images/products/odger-chair-anthracite__0739669_pe741828_s5.jpg?f=m"
+			"imageUrl": "https://www.ikea.com/sa/en/images/products/odger-chair-anthracite__0739669_pe741828_s5.jpg?f=s"
 		},
 		{	
 			"id": "6",
@@ -81,7 +81,7 @@
 				"color": "black"
 			},
 			"type": "couch",
-			"imageUrl": "https://shop.static.ingka.ikea.com/PIAimages/0630092_PE694645_S4.JPG"
+			"imageUrl": "https://www.ikea-club.org/cache/zoo_images/5/5eb416493ae0d3e4baf5b2b09089e220.jpg"
 		},
 		{	
 			"id": "7",
@@ -95,7 +95,7 @@
 				"color": "multi"
 			},
 			"type": "couch",
-			"imageUrl": "https://shop.static.ingka.ikea.com/PIAimages/0655887_PE709150_S4.JPG"
+			"imageUrl": "https://www.ikea-club.org/cache/zoo_images/5/5eb416493ae0d3e4baf5b2b09089e220.jpg"
 		},
 		{	
 			"id": "8",
@@ -109,7 +109,7 @@
 				"color": "black"
 			},
 			"type": "chair",
-			"imageUrl": "https://shop.static.ingka.ikea.com/PIAimages/0724693_PE734575_S4.JPG"
+			"imageUrl": "https://www.ikea-club.org/cache/zoo_images/5/5eb416493ae0d3e4baf5b2b09089e220.jpg"
 		},
 		{	
 			"id": "9",
@@ -123,7 +123,7 @@
 				"color": "flanell"
 			},
 			"type": "couch",
-			"imageUrl": "https://shop.static.ingka.ikea.com/PIAimages/0617825_PE688232_S4.JPG"
+			"imageUrl": "https://www.ikea-club.org/cache/zoo_images/5/5eb416493ae0d3e4baf5b2b09089e220.jpg"
 		},
 		{	
 			"id": "10",
@@ -137,7 +137,7 @@
 				"color": "black"
 			},
 			"type": "chair",
-			"imageUrl": "https://shop.static.ingka.ikea.com/PIAimages/0154688_PE312833_S4.JPG"
+			"imageUrl": "https://www.ikea-club.org/cache/zoo_images/5/5eb416493ae0d3e4baf5b2b09089e220.jpg"
 		},
 		{	
 			"id": "11",
@@ -151,7 +151,7 @@
 				"color": "black"
 			},
 			"type": "chair",
-			"imageUrl": "https://shop.static.ingka.ikea.com/PIAimages/0728320_PE736188_S4.JPG"
+			"imageUrl": "https://www.ikea-club.org/cache/zoo_images/5/5eb416493ae0d3e4baf5b2b09089e220.jpg"
 		},
 		{	
 			"id": "12",
@@ -165,7 +165,7 @@
 				"color": "wood"
 			},
 			"type": "chair",
-			"imageUrl": "https://shop.static.ingka.ikea.com/PIAimages/0579780_PE669907_S4.JPG"
+			"imageUrl": "https://www.ikea-club.org/cache/zoo_images/5/5eb416493ae0d3e4baf5b2b09089e220.jpg"
 		},
 		{	
 			"id": "13",
@@ -179,7 +179,7 @@
 				"color": "white"
 			},
 			"type": "chair",
-			"imageUrl": "https://shop.static.ingka.ikea.com/PIAimages/0728156_PE736116_S4.JPG"
+			"imageUrl": "https://www.ikea-club.org/cache/zoo_images/5/5eb416493ae0d3e4baf5b2b09089e220.jpg"
 		},
 		{	
 			"id": "14",
@@ -193,7 +193,7 @@
 				"color": "multi"
 			},
 			"type": "couch",
-			"imageUrl": "https://shop.static.ingka.ikea.com/PIAimages/0619738_PE689282_S4.JPG"
+			"imageUrl": "https://www.ikea-club.org/cache/zoo_images/5/5eb416493ae0d3e4baf5b2b09089e220.jpg"
 		}
 	]
 }

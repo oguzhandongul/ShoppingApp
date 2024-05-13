@@ -7,12 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -20,15 +16,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -43,8 +33,6 @@ import com.oguzhandongul.shoppingapp.features.productdetail.R
 import com.oguzhandongul.shoppingapp.features.productdetail.presentation.uistates.ProductDetailUiState
 import com.oguzhandongul.shoppingapp.features.productdetail.presentation.viewmodels.ProductDetailViewModel
 import com.oguzhandongul.shoppingapp.product.model.Product
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @Composable
 fun ProductDetailRoute(
@@ -88,7 +76,10 @@ internal fun ProductDetailScreen(
             is ProductDetailUiState.Loading -> LoadingView()
             is ProductDetailUiState.Error -> ErrorView(exception = Exception(state.error)) { onBackClick() }
             is ProductDetailUiState.Success -> {
-                ProductDetailContent(product = state.product, onAddToCartClick = onAddToCartClick, modifier = Modifier.padding(paddingValues))
+                ProductDetailContent(
+                    product = state.product,
+                    onAddToCartClick = onAddToCartClick,
+                    modifier = Modifier.padding(paddingValues))
             }
         }
     }
@@ -113,7 +104,11 @@ fun ProductDetailContent(
                 .fillMaxWidth()
                 .padding(Dimensions.medium)
         ) {
-            Text(text = product.name, fontWeight = FontWeight.Bold, fontSize = 20.sp)
+            Text(
+                text = product.name,
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp
+            )
             Spacer(modifier = Modifier.height(Dimensions.small))
             Text(text = product.type)
             Spacer(modifier = Modifier.height(Dimensions.small))
@@ -140,7 +135,8 @@ fun ProductDetailContent(
             AnimatedButton(
                 text = "Add to Cart",
                 onClick = onAddToCartClick,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
             )
         }
     }

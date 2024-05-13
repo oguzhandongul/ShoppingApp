@@ -19,6 +19,7 @@ coil = "2.6.0"
 moshi = "1.15.1"
 navigation = "2.7.7"
 room = "2.6.1"
+animation = "1.7.0-alpha08"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -33,6 +34,7 @@ androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+androidx-ui-animation = { group = "androidx.compose.animation", name = "animation", version.ref = "animation" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation"}
 androidx-room = { group = "androidx.room", name = "room-runtime", version.ref = "room"}

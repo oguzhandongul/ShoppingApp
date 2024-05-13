@@ -12,9 +12,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
@@ -26,8 +26,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -119,27 +117,30 @@ internal fun Content(
             contentPadding = PaddingValues(Dimensions.small), // Add some padding
             modifier = modifier.padding(paddingValues)
         ) {
-            items(items.size) { index ->
-                ProductCard(items[index], onCartItem, modifier = Modifier
+            items(items, key = { item -> item.id }) { product ->
+                ProductCard(product, onCartItem, modifier = Modifier
                     .clickable {
-                        onGoToItem(items[index].id)
+                        onGoToItem(product.id)
                     }
-                    .testTag("item_$index"))
+                )
             }
         }
     }
 }
 
 @Composable
-fun ProductCard(product: Product, onCartItem: (Product) -> Unit, modifier: Modifier) {
-    Card(
+fun ProductCard(
+    product: Product,
+    onCartItem: (Product) -> Unit,
+    modifier: Modifier
+) {
+    Box(
         modifier = modifier
-            .padding(Dimensions.small)
-            .background(color = Color.White)
             .fillMaxWidth()
     ) {
         Column(
             modifier = Modifier
+                .padding(Dimensions.small)
                 .fillMaxWidth(),
         ) {
             CoilImage(
@@ -151,7 +152,10 @@ fun ProductCard(product: Product, onCartItem: (Product) -> Unit, modifier: Modif
             Column(
                 modifier = Modifier.padding(Dimensions.medium) // Padding applied here
             ) {
-                Text(text = product.name, fontWeight = FontWeight.Bold)
+                Text(
+                    text = product.name,
+                    fontWeight = FontWeight.Bold
+                )
                 Text(text = product.type)
                 Text(
                     text = "${product.price.value} ${product.price.currency}",
@@ -162,8 +166,9 @@ fun ProductCard(product: Product, onCartItem: (Product) -> Unit, modifier: Modif
                 Spacer(modifier = Modifier.height(Dimensions.medium))
                 AnimatedButton(
                     text = stringResource(id = R.string.label_add_to_cart),
-                    onClick = {onCartItem(product) },
-                    modifier = Modifier.fillMaxWidth()
+                    onClick = { onCartItem(product) },
+                    modifier = Modifier
+                        .fillMaxWidth()
                 )
             }
         }
@@ -185,6 +190,6 @@ fun CartFloatingActionButton(
                 contentDescription = "Shopping Cart"
             )
         },
-        text = { Text("Cart ($itemCount)") } // Include item count in the text
+        text = { Text("Cart ($itemCount)") }
     )
 }
