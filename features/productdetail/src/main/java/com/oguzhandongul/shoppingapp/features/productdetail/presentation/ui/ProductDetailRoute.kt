@@ -1,5 +1,6 @@
 package com.oguzhandongul.shoppingapp.features.productdetail.presentation.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,6 +28,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -38,6 +40,7 @@ import com.oguzhandongul.shoppingapp.core.ui.components.ErrorView
 import com.oguzhandongul.shoppingapp.core.ui.components.LoadingView
 import com.oguzhandongul.shoppingapp.core.ui.components.ProductLabel
 import com.oguzhandongul.shoppingapp.core.ui.theme.Dimensions
+import com.oguzhandongul.shoppingapp.core.util.extensions.toCurrencyString
 import com.oguzhandongul.shoppingapp.features.productdetail.R
 import com.oguzhandongul.shoppingapp.features.productdetail.presentation.uistates.ProductDetailUiState
 import com.oguzhandongul.shoppingapp.features.productdetail.presentation.viewmodels.ProductDetailViewModel
@@ -115,18 +118,25 @@ fun ProductDetailContent(
                     .fillMaxWidth()
                     .padding(Dimensions.medium)
             ) {
-                Text(
-                    text = product.name,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp
-                )
+                Row(
+                    modifier = Modifier,
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    Text(
+                        text = product.name,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp
+                    )
+                    ProductLabel(text = product.type)
+                }
                 Spacer(modifier = Modifier.height(Dimensions.small))
-                ProductLabel(text = product.type)
+
                 Spacer(modifier = Modifier.height(Dimensions.medium))
                 DetailItem(title = "Material", product.info.material)
                 DetailItem(title = "Color", product.info.color)
                 DetailItem(title = "Number of Seats", product.info.numberOfSeats?.toString())
-                Spacer(modifier = Modifier.height(Dimensions.small))
+                Spacer(modifier = Modifier.height(100.dp))
 
 
             }
@@ -135,16 +145,17 @@ fun ProductDetailContent(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
-                .shadow(4.dp)
+                .shadow(8.dp)
+                .background(Color.White)
                 .fillMaxWidth()
                 .height(80.dp)
                 .align(Alignment.BottomEnd)
-                .padding(Dimensions.medium, Dimensions.large, Dimensions.medium, Dimensions.small)
+                .padding(Dimensions.medium, Dimensions.medium, Dimensions.medium, Dimensions.small)
 
         ) {
             PriceItem(
                 currency = product.price.currency,
-                value = product.price.value.toString(),
+                value = product.price.value.toCurrencyString(),
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
             )

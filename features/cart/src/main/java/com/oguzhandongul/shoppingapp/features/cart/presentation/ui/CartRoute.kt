@@ -50,6 +50,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.oguzhandongul.shoppingapp.core.ui.components.CoilImage
 import com.oguzhandongul.shoppingapp.core.ui.theme.Dimensions
+import com.oguzhandongul.shoppingapp.core.util.extensions.toCurrencyString
 import com.oguzhandongul.shoppingapp.features.cart.R
 import com.oguzhandongul.shoppingapp.features.cart.presentation.uistates.CartUiState
 import com.oguzhandongul.shoppingapp.features.cart.presentation.viewmodel.CartViewModel
@@ -182,7 +183,7 @@ private fun CartBottomBar(totalPrice: Double, totalItemCount: Int) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(text = "Total Price:", fontWeight = FontWeight.SemiBold)
-            Text(text = "$totalPrice kr", fontWeight = FontWeight.SemiBold)
+            Text(text = "${totalPrice.toCurrencyString()} kr", fontWeight = FontWeight.SemiBold)
         }
     }
 }

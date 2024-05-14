@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.oguzhandongul.shoppingapp.core.ui.components.AnimatedButton
 import com.oguzhandongul.shoppingapp.core.ui.components.AnimateOnValueChange
@@ -37,6 +38,8 @@ import com.oguzhandongul.shoppingapp.core.ui.components.ErrorView
 import com.oguzhandongul.shoppingapp.core.ui.components.ProductLabel
 import com.oguzhandongul.shoppingapp.core.ui.extensions.animatedShakeAndScale
 import com.oguzhandongul.shoppingapp.core.ui.theme.Dimensions
+import com.oguzhandongul.shoppingapp.core.util.extensions.toCurrencyString
+import com.oguzhandongul.shoppingapp.product.extensions.flatten
 import com.oguzhandongul.shoppingapp.product.model.Product
 import com.oguzhandongul.shoppingapp.productlist.R
 import com.oguzhandongul.shoppingapp.productlist.presentation.uistates.ProductListUiState
@@ -165,12 +168,20 @@ fun ProductCard(
             ) {
                 Text(
                     text = product.name,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.SemiBold
                 )
                 Text(
-                    text = "${product.price.value} ${product.price.currency}",
-                    fontWeight = FontWeight.Bold
+                    text = product.info.flatten(),
+                    fontWeight = FontWeight.Light,
+                    fontSize = 12.sp,
+                    maxLines = 1
                 )
+                Text(
+                    text = product.price.let { it.value.toCurrencyString(it.currency) },
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp
+                )
+
 
                 Spacer(modifier = Modifier.height(Dimensions.medium))
                 Box(modifier = Modifier.fillMaxWidth()) {
