@@ -20,6 +20,10 @@ val Grey300 = Color(0xFFE0E0E0)
 val Grey100 = Color(0xFFF5F5F5)
 val Grey50 = Color(0xFFFAFAFA)
 
+val Yellow100 = Color(0xFFFFF9C4)
+val Yellow300 = Color(0xFFFFF176)
+val Yellow500 = Color(0xFFFDD835)
+
 val Purple40 = Color(0xFF6650a4)
 val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)

@@ -23,13 +23,13 @@ class ProductListViewModel @Inject constructor(
     private val getProductListUseCase: GetProductListUseCase,
     private val cacheProductListUseCase: CacheProductListUseCase,
     private val addToCartUseCase: AddToCartUseCase,
-    private val getCarttUseCase: GetCartItemCountUseCase
+    getCartUseCase: GetCartItemCountUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<ProductListUiState>(ProductListUiState.Loading)
     val uiState: StateFlow<ProductListUiState> = _uiState.asStateFlow()
 
-    val cartItemCount: StateFlow<Int> = getCarttUseCase().stateIn(
+    val cartItemCount: StateFlow<Int> = getCartUseCase().stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(5000),
         0
@@ -45,7 +45,8 @@ class ProductListViewModel @Inject constructor(
                 when (resource) {
                     is Resource.Loading -> _uiState.value = ProductListUiState.Loading
                     is Resource.Success -> loadProductsData()
-                    is Resource.Error -> _uiState.value = ProductListUiState.Error(resource.message!!)
+                    is Resource.Error -> _uiState.value =
+                        ProductListUiState.Error(resource.message!!)
                 }
             }
         }
@@ -73,9 +74,11 @@ class ProductListViewModel @Inject constructor(
                     is Resource.Success -> {
                         // Potentially show a success message here or update UI accordingly
                     }
+
                     is Resource.Error -> {
                         // Show error message to the user
                     }
+
                     is Resource.Loading -> {
                         // You might want to show a loading indicator if this takes a while
                     }

@@ -26,6 +26,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -100,45 +101,63 @@ fun ProductDetailContent(
     onAddToCartClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier = modifier.verticalScroll(rememberScrollState())) {
-        CoilImage(
-            url = product.imageUrl,
-            modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(16f / 9f)
-        )
-        Spacer(modifier = Modifier.height(Dimensions.medium))
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(Dimensions.medium)
-        ) {
-            Text(
-                text = product.name,
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = modifier.verticalScroll(rememberScrollState())) {
+            CoilImage(
+                url = product.imageUrl,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1f / 1f)
             )
-            Spacer(modifier = Modifier.height(Dimensions.small))
-            ProductLabel(text = product.type)
             Spacer(modifier = Modifier.height(Dimensions.medium))
-            DetailItem(title = "Material", product.info.material)
-            DetailItem(title = "Color", product.info.color)
-            DetailItem(title = "Number of Seats", product.info.numberOfSeats?.toString())
-            Spacer(modifier = Modifier.height(Dimensions.small))
-            PriceItem(currency = product.price.currency, value = product.price.value.toString())
-            Spacer(modifier = Modifier.fillMaxSize())
-            Box(modifier = Modifier.fillMaxSize()) {
-                AnimatedButton(
-                    text = "Add to Cart",
-                    onClick = onAddToCartClick,
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .fillMaxWidth()
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(Dimensions.medium)
+            ) {
+                Text(
+                    text = product.name,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp
                 )
-            }
+                Spacer(modifier = Modifier.height(Dimensions.small))
+                ProductLabel(text = product.type)
+                Spacer(modifier = Modifier.height(Dimensions.medium))
+                DetailItem(title = "Material", product.info.material)
+                DetailItem(title = "Color", product.info.color)
+                DetailItem(title = "Number of Seats", product.info.numberOfSeats?.toString())
+                Spacer(modifier = Modifier.height(Dimensions.small))
 
+
+            }
+        }
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .shadow(4.dp)
+                .fillMaxWidth()
+                .height(80.dp)
+                .align(Alignment.BottomEnd)
+                .padding(Dimensions.medium, Dimensions.large, Dimensions.medium, Dimensions.small)
+
+        ) {
+            PriceItem(
+                currency = product.price.currency,
+                value = product.price.value.toString(),
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
+            )
+            AnimatedButton(
+                onClick = onAddToCartClick,
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
+                    .width(180.dp)
+                    .height(56.dp)
+            )
         }
     }
+
 }
 
 @Composable
@@ -154,10 +173,10 @@ fun DetailItem(title: String, value: String?) {
 }
 
 @Composable
-fun PriceItem(currency: String, value: String?) {
+fun PriceItem(currency: String, value: String?, modifier: Modifier) {
     value?.let {
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = modifier,
             verticalAlignment = Alignment.Top,
             horizontalArrangement = Arrangement.Center
         ) {

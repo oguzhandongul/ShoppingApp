@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -30,9 +31,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.oguzhandongul.shoppingapp.core.ui.components.AnimatedButton
+import com.oguzhandongul.shoppingapp.core.ui.components.AnimateOnValueChange
 import com.oguzhandongul.shoppingapp.core.ui.components.CoilImage
 import com.oguzhandongul.shoppingapp.core.ui.components.ErrorView
 import com.oguzhandongul.shoppingapp.core.ui.components.ProductLabel
+import com.oguzhandongul.shoppingapp.core.ui.extensions.animatedShakeAndScale
 import com.oguzhandongul.shoppingapp.core.ui.theme.Dimensions
 import com.oguzhandongul.shoppingapp.product.model.Product
 import com.oguzhandongul.shoppingapp.productlist.R
@@ -114,7 +117,12 @@ internal fun Content(
     ) { paddingValues ->
         LazyVerticalGrid(
             columns = GridCells.Fixed(2), // Two columns in the grid
-            contentPadding = PaddingValues(Dimensions.small,Dimensions.small,Dimensions.small,Dimensions.xxlarge), // Add some padding
+            contentPadding = PaddingValues(
+                Dimensions.small,
+                Dimensions.small,
+                Dimensions.small,
+                Dimensions.xxlarge
+            ), // Add some padding
             modifier = modifier.padding(paddingValues)
         ) {
             items(items, key = { item -> item.id }) { product ->
@@ -150,7 +158,7 @@ fun ProductCard(
                         .fillMaxWidth()
                         .height(150.dp)
                 )
-                ProductLabel(text = product.type, modifier = Modifier.align(Alignment.TopEnd))
+                ProductLabel(text = product.type, modifier = Modifier.align(Alignment.TopStart))
             }
             Column(
                 modifier = Modifier.padding(Dimensions.medium) // Padding applied here
@@ -165,12 +173,16 @@ fun ProductCard(
                 )
 
                 Spacer(modifier = Modifier.height(Dimensions.medium))
-                AnimatedButton(
-                    text = stringResource(id = R.string.label_add_to_cart),
-                    onClick = { onCartItem(product) },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                )
+                Box(modifier = Modifier.fillMaxWidth()) {
+                    AnimatedButton(
+                        onClick = { onCartItem(product) },
+                        modifier = Modifier
+                            .width(60.dp)
+                            .height(40.dp)
+                            .align(Alignment.BottomEnd)
+                    )
+                }
+
             }
         }
     }
@@ -182,15 +194,17 @@ fun CartFloatingActionButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    ExtendedFloatingActionButton(
-        onClick = onClick,
-        modifier = modifier,
-        icon = {
-            Icon(
-                imageVector = Icons.Default.ShoppingCart,
-                contentDescription = "Shopping Cart"
-            )
-        },
-        text = { Text("Cart ($itemCount)") }
-    )
+    AnimateOnValueChange(itemCount) { shouldAnimate ->
+        ExtendedFloatingActionButton(
+            onClick = onClick,
+            modifier = modifier.animatedShakeAndScale(shouldAnimate = shouldAnimate),
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.ShoppingCart,
+                    contentDescription = "Shopping Cart"
+                )
+            },
+            text = { Text("Cart ($itemCount)") }
+        )
+    }
 }

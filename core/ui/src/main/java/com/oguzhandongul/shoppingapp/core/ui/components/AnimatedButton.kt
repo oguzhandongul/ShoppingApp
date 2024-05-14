@@ -1,76 +1,91 @@
 package com.oguzhandongul.shoppingapp.core.ui.components
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.font.FontWeight
-import com.oguzhandongul.shoppingapp.core.ui.extensions.bounceClick
+import androidx.compose.ui.unit.dp
 import com.oguzhandongul.shoppingapp.core.ui.theme.Green700
 import kotlinx.coroutines.delay
 
 @Composable
 fun AnimatedButton(
-    text: String = "Add to Basket",
-    icon: ImageVector = Icons.Default.Check, // Success checkmark icon
-    onClick: () -> Unit,
-    buttonColors: ButtonColors = ButtonDefaults.buttonColors(
-        disabledContainerColor = Green700,
-        disabledContentColor = Color.White
-    ),
     modifier: Modifier = Modifier,
-    enabled: Boolean = true // Make the button enabled/disabled based on a state
+    onClick: () -> Unit
 ) {
+    var showCheckmark by remember { mutableStateOf(false) }
 
-    var showIcon by remember { mutableStateOf(false) } // State to control icon visibility
+    val backgroundColor by animateColorAsState(
+        targetValue = if (showCheckmark) Green700 else MaterialTheme.colorScheme.primary,
+        animationSpec = tween(durationMillis = 200)
+    )
 
-    // Control the enabled state of the button based on `initiallyEnabled` and `showIcon`
-    val buttonEnabled by remember {
-        derivedStateOf {
-            enabled && !showIcon
-        }
-    }
+    val shoppingCartOffset by animateDpAsState(
+        targetValue = if (showCheckmark) 50.dp else 0.dp, // Slide down if showCheckmark is true
+        animationSpec = tween(durationMillis = 700)
+    )
 
-    LaunchedEffect(key1 = showIcon) {
-        if (showIcon) {
-            delay(1000)
-            showIcon = false
+    val checkmarkOffset by animateDpAsState(
+        targetValue = if (showCheckmark) 0.dp else (-50).dp, // Slide in from top if showCheckmark is true
+        animationSpec = tween(durationMillis = 700)
+    )
+
+    LaunchedEffect(key1 = showCheckmark) {
+        if (showCheckmark) {
+            delay(700)
+            showCheckmark = false
         }
     }
 
     Button(
         onClick = {
-            if (enabled) {
-                showIcon = true
-                onClick()
-            }
+            onClick()
+            showCheckmark = true
         },
-        modifier = modifier.bounceClick(),
-        enabled = buttonEnabled, // Use the derived enabled state
-        colors = buttonColors
+        modifier = modifier,
+        contentPadding = PaddingValues(0.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = backgroundColor
+        )
     ) {
-        if (showIcon) {
-            // Show icon when clicked
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .align(Alignment.CenterVertically)) {
             Icon(
-                imageVector = icon,
-                contentDescription = "Success"
+                imageVector = Icons.Default.ShoppingCart,
+                contentDescription = "Add to cart",
+                tint = Color.White,
+                modifier = Modifier
+                    .offset(y = shoppingCartOffset)
+                    .align(Alignment.Center)
             )
-        } else {
-            // Show text otherwise
-            Text(text = text, fontWeight = FontWeight.SemiBold)
+            Icon(
+                imageVector = Icons.Filled.Check,
+                contentDescription = "Added to cart",
+                tint = Color.White,
+                modifier = Modifier
+                    .offset(y = checkmarkOffset)
+                    .align(Alignment.Center)
+            )
         }
     }
 }
