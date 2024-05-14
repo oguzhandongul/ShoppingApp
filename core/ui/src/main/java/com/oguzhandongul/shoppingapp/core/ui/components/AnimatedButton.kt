@@ -17,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
 import com.oguzhandongul.shoppingapp.core.ui.extensions.bounceClick
 import com.oguzhandongul.shoppingapp.core.ui.theme.Green700
 import kotlinx.coroutines.delay
@@ -69,7 +70,7 @@ fun AnimatedButton(
             )
         } else {
             // Show text otherwise
-            Text(text = text)
+            Text(text = text, fontWeight = FontWeight.SemiBold)
         }
     }
 }

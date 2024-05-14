@@ -1,6 +1,5 @@
 package com.oguzhandongul.shoppingapp.productlist.presentation.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,6 +32,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.oguzhandongul.shoppingapp.core.ui.components.AnimatedButton
 import com.oguzhandongul.shoppingapp.core.ui.components.CoilImage
 import com.oguzhandongul.shoppingapp.core.ui.components.ErrorView
+import com.oguzhandongul.shoppingapp.core.ui.components.ProductLabel
 import com.oguzhandongul.shoppingapp.core.ui.theme.Dimensions
 import com.oguzhandongul.shoppingapp.product.model.Product
 import com.oguzhandongul.shoppingapp.productlist.R
@@ -114,7 +114,7 @@ internal fun Content(
     ) { paddingValues ->
         LazyVerticalGrid(
             columns = GridCells.Fixed(2), // Two columns in the grid
-            contentPadding = PaddingValues(Dimensions.small), // Add some padding
+            contentPadding = PaddingValues(Dimensions.small,Dimensions.small,Dimensions.small,Dimensions.xxlarge), // Add some padding
             modifier = modifier.padding(paddingValues)
         ) {
             items(items, key = { item -> item.id }) { product ->
@@ -143,12 +143,15 @@ fun ProductCard(
                 .padding(Dimensions.small)
                 .fillMaxWidth(),
         ) {
-            CoilImage(
-                url = product.imageUrl,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(150.dp)
-            )
+            Box(modifier = modifier) {
+                CoilImage(
+                    url = product.imageUrl,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(150.dp)
+                )
+                ProductLabel(text = product.type, modifier = Modifier.align(Alignment.TopEnd))
+            }
             Column(
                 modifier = Modifier.padding(Dimensions.medium) // Padding applied here
             ) {
@@ -156,13 +159,11 @@ fun ProductCard(
                     text = product.name,
                     fontWeight = FontWeight.Bold
                 )
-                Text(text = product.type)
                 Text(
                     text = "${product.price.value} ${product.price.currency}",
                     fontWeight = FontWeight.Bold
                 )
 
-                // Add to Cart Button
                 Spacer(modifier = Modifier.height(Dimensions.medium))
                 AnimatedButton(
                     text = stringResource(id = R.string.label_add_to_cart),

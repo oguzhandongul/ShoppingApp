@@ -1,12 +1,18 @@
 package com.oguzhandongul.shoppingapp.features.productdetail.presentation.ui
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -18,6 +24,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -28,6 +35,7 @@ import com.oguzhandongul.shoppingapp.core.ui.components.AnimatedButton
 import com.oguzhandongul.shoppingapp.core.ui.components.CoilImage
 import com.oguzhandongul.shoppingapp.core.ui.components.ErrorView
 import com.oguzhandongul.shoppingapp.core.ui.components.LoadingView
+import com.oguzhandongul.shoppingapp.core.ui.components.ProductLabel
 import com.oguzhandongul.shoppingapp.core.ui.theme.Dimensions
 import com.oguzhandongul.shoppingapp.features.productdetail.R
 import com.oguzhandongul.shoppingapp.features.productdetail.presentation.uistates.ProductDetailUiState
@@ -79,7 +87,8 @@ internal fun ProductDetailScreen(
                 ProductDetailContent(
                     product = state.product,
                     onAddToCartClick = onAddToCartClick,
-                    modifier = Modifier.padding(paddingValues))
+                    modifier = Modifier.padding(paddingValues)
+                )
             }
         }
     }
@@ -91,7 +100,7 @@ fun ProductDetailContent(
     onAddToCartClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier = modifier) {
+    Column(modifier = modifier.verticalScroll(rememberScrollState())) {
         CoilImage(
             url = product.imageUrl,
             modifier = Modifier
@@ -110,34 +119,50 @@ fun ProductDetailContent(
                 fontSize = 20.sp
             )
             Spacer(modifier = Modifier.height(Dimensions.small))
-            Text(text = product.type)
+            ProductLabel(text = product.type)
+            Spacer(modifier = Modifier.height(Dimensions.medium))
+            DetailItem(title = "Material", product.info.material)
+            DetailItem(title = "Color", product.info.color)
+            DetailItem(title = "Number of Seats", product.info.numberOfSeats?.toString())
             Spacer(modifier = Modifier.height(Dimensions.small))
-            Text(text = "${product.price.value} ${product.price.currency}", fontSize = 18.sp)
-
-            Spacer(modifier = Modifier.height(Dimensions.medium))
-
-            product.info.material?.let { material ->
-                Text(text = "Material: $material")
-                Spacer(modifier = Modifier.height(4.dp))
+            PriceItem(currency = product.price.currency, value = product.price.value.toString())
+            Spacer(modifier = Modifier.fillMaxSize())
+            Box(modifier = Modifier.fillMaxSize()) {
+                AnimatedButton(
+                    text = "Add to Cart",
+                    onClick = onAddToCartClick,
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .fillMaxWidth()
+                )
             }
 
-            product.info.color.let { color ->
-                Text(text = "Color: $color")
-                Spacer(modifier = Modifier.height(4.dp))
-            }
+        }
+    }
+}
 
-            product.info.numberOfSeats?.let { numberOfSeats ->
-                Text(text = "Number of Seats: $numberOfSeats")
-                Spacer(modifier = Modifier.height(4.dp))
-            }
+@Composable
+fun DetailItem(title: String, value: String?) {
+    value?.let {
+        Row(modifier = Modifier.fillMaxWidth()) {
+            Text(text = "$title:", fontWeight = FontWeight.SemiBold)
+            Spacer(modifier = Modifier.width(Dimensions.small))
+            Text(text = it)
+        }
+        Spacer(modifier = Modifier.height(Dimensions.small))
+    }
+}
 
-            Spacer(modifier = Modifier.height(Dimensions.medium))
-            AnimatedButton(
-                text = "Add to Cart",
-                onClick = onAddToCartClick,
-                modifier = Modifier
-                    .fillMaxWidth()
-            )
+@Composable
+fun PriceItem(currency: String, value: String?) {
+    value?.let {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.Top,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(text = it, fontWeight = FontWeight.Bold, fontSize = 30.sp)
+            Text(text = " $currency", fontWeight = FontWeight.Thin)
         }
     }
 }

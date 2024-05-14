@@ -181,8 +181,8 @@ private fun CartBottomBar(totalPrice: Double, totalItemCount: Int) {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("Total Price:")
-            Text("$totalPrice kr")
+            Text(text = "Total Price:", fontWeight = FontWeight.SemiBold)
+            Text(text = "$totalPrice kr", fontWeight = FontWeight.SemiBold)
         }
     }
 }
@@ -213,7 +213,7 @@ fun CartContent(
     modifier: Modifier = Modifier
 ) {
     LazyColumn(modifier = modifier) {
-        items(cartItems) { cartItem ->
+        items(cartItems, key = {item -> item.productId}) { cartItem ->
             CartItemCard(cartItem, onRemoveItem, onUpdateQuantity)
         }
     }

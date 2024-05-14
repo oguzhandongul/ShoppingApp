@@ -18,7 +18,7 @@ fun CoilImage(url: String, modifier: Modifier = Modifier) {
         .data(url)
         .placeholder(R.drawable.placeholder_image_24)
         .error(R.drawable.placeholder_image_24)
-        .memoryCachePolicy(CachePolicy.DISABLED)
+        .memoryCachePolicy(CachePolicy.ENABLED)
         .memoryCacheKey(url)
         .build()
 
