@@ -40,6 +40,7 @@ android {
 dependencies {
     implementation(libs.androidx.room)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.core.ktx)
     ksp(libs.androidx.room.compiler)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.moshi)
@@ -47,4 +48,19 @@ dependencies {
     implementation(libs.moshi.kotlin)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.room.testing)
+
+    testImplementation (libs.moshi.kotlin)
+    testImplementation (libs.moshi)
+    testImplementation(libs.junit)
+    testImplementation(libs.mockk)
+    testImplementation(libs.mockito.test)
+    testImplementation(libs.mockito)
+    testImplementation(libs.mockito.inline)
+    testImplementation(libs.kotlin.test)
+    testImplementation(libs.google.truth)
+
 }

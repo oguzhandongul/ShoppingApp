@@ -1,5 +1,6 @@
 package com.oguzhandongul.shoppingapp.productlist.presentation.viewmodels
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.oguzhandongul.shoppingapp.core.util.utils.Resource
@@ -39,7 +40,8 @@ class ProductListViewModel @Inject constructor(
         cacheProducts()
     }
 
-    private fun cacheProducts() {
+    @VisibleForTesting
+    fun cacheProducts() {
         viewModelScope.launch {
             cacheProductListUseCase().collect { resource ->
                 when (resource) {
@@ -52,7 +54,7 @@ class ProductListViewModel @Inject constructor(
         }
     }
 
-    private fun loadProductsData() {
+    fun loadProductsData() {
         viewModelScope.launch {
             getProductListUseCase().collect { resource ->
                 _uiState.value = when (resource) {
@@ -80,7 +82,7 @@ class ProductListViewModel @Inject constructor(
                     }
 
                     is Resource.Loading -> {
-                        // You might want to show a loading indicator if this takes a while
+                        // Show a loading indicator if this takes a while
                     }
                 }
             }
