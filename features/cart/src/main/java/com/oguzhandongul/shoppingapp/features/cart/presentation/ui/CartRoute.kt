@@ -47,6 +47,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.oguzhandongul.shoppingapp.core.ui.components.CoilImage
 import com.oguzhandongul.shoppingapp.core.ui.theme.Dimensions
@@ -183,7 +184,11 @@ private fun CartBottomBar(totalPrice: Double, totalItemCount: Int) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(text = "Total Price:", fontWeight = FontWeight.SemiBold)
-            Text(text = "${totalPrice.toCurrencyString()} kr", fontWeight = FontWeight.SemiBold)
+            Text(
+                text = "${totalPrice.toCurrencyString()} kr",
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 20.sp
+            )
         }
     }
 }
@@ -214,7 +219,7 @@ fun CartContent(
     modifier: Modifier = Modifier
 ) {
     LazyColumn(modifier = modifier) {
-        items(cartItems, key = {item -> item.productId}) { cartItem ->
+        items(cartItems, key = { item -> item.productId }) { cartItem ->
             CartItemCard(cartItem, onRemoveItem, onUpdateQuantity)
         }
     }
@@ -250,7 +255,7 @@ fun CartItemCard(
                 modifier = Modifier.weight(1f)
             ) {
                 Text(text = cartItem.product.name, fontWeight = FontWeight.Bold)
-                Text(text = "${cartItem.product.price.value} ${cartItem.product.price.currency}")
+                Text(text = "${cartItem.product.price.value.toCurrencyString()} ${cartItem.product.price.currency}")
                 // Quantity Button
                 Button(
                     onClick = { showQuantityDialog = true },
