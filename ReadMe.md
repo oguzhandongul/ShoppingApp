@@ -6,6 +6,7 @@ A small-scale Android shopping application demonstrating a modern and scalable a
 -   Introduction
 -   Features
   - Screenshots
+-   Modules
 -   Architecture
 -   Tech Stack and Dependencies
 -   Strong Points
@@ -34,9 +35,17 @@ ShoppingApp is a sample Android application designed to demonstrate modern Andro
 <img src="/Screenshots/Cart_Empty.png" width="32%"/>
 </p>
 
+**Modules**
+
+Modularization is a practice of organizing a codebase into loosely coupled and self contained parts. Each part is a module. Each module is independent and serves a clear purpose. By dividing a problem into smaller and easier to solve subproblems, you reduce the complexity of designing and maintaining a large system.  ([Source](https://developer.android.com/topic/modularization))
+
+<p align="center">
+<img src="/Screenshots/Modules.png" width="75%"/>
+</p>
+
 **Architecture**
 
-The application follows a clean architecture approach with MVVM, using the following components:
+The application follows a Modern Multi Modular clean architecture approach with MVVM, using the following components:
 
 **Presentation Layer**
 
