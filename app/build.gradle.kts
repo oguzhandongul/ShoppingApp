@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hiltPlugin)
 }
 
 android {
@@ -40,7 +42,10 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.11"
+    }
+    hilt {
+        enableAggregatingTask = true
     }
     packaging {
         resources {
@@ -51,6 +56,13 @@ android {
 
 dependencies {
 
+    implementation(project(":core:ui"))
+    implementation(project(":core:util"))
+    implementation(project(":data:product"))
+    implementation(project(":features:productlist"))
+    implementation(project(":features:cart"))
+    implementation(project(":features:productdetail"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -59,6 +71,21 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.navigation.compose)
+
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room)
+    ksp(libs.androidx.room.compiler)
+
+    implementation(libs.hilt.navigation.compose)
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+
+    debugImplementation(libs.leak.canary)
+    debugImplementation(libs.moshi)
+    debugImplementation(libs.moshi.adapter)
+    debugImplementation(libs.moshi.kotlin)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_loading_cart">Failed to load cart items</string>
+    <string name="error_empty_cart">The cart is empty</string>
+    <string name="label_clear_cart">Clear the Cart</string>
+    <string name="title_cart">Cart</string>
+    <string name="title_select_quantity">Select Quantity</string>
+    <string name="title_empty_cart">Empty Cart?</string>
+    <string name="desc_empty_cart">Are you sure you want to empty your cart?</string>
+</resources>
