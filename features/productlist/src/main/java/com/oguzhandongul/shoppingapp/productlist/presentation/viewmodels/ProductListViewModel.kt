@@ -1,5 +1,6 @@
 package com.oguzhandongul.shoppingapp.productlist.presentation.viewmodels
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.oguzhandongul.shoppingapp.core.util.utils.Resource
@@ -23,13 +24,13 @@ class ProductListViewModel @Inject constructor(
     private val getProductListUseCase: GetProductListUseCase,
     private val cacheProductListUseCase: CacheProductListUseCase,
     private val addToCartUseCase: AddToCartUseCase,
-    private val getCarttUseCase: GetCartItemCountUseCase
+    getCartUseCase: GetCartItemCountUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<ProductListUiState>(ProductListUiState.Loading)
     val uiState: StateFlow<ProductListUiState> = _uiState.asStateFlow()
 
-    val cartItemCount: StateFlow<Int> = getCarttUseCase().stateIn(
+    val cartItemCount: StateFlow<Int> = getCartUseCase().stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(5000),
         0
@@ -39,19 +40,21 @@ class ProductListViewModel @Inject constructor(
         cacheProducts()
     }
 
-    private fun cacheProducts() {
+    @VisibleForTesting
+    fun cacheProducts() {
         viewModelScope.launch {
             cacheProductListUseCase().collect { resource ->
                 when (resource) {
                     is Resource.Loading -> _uiState.value = ProductListUiState.Loading
                     is Resource.Success -> loadProductsData()
-                    is Resource.Error -> _uiState.value = ProductListUiState.Error(resource.message!!)
+                    is Resource.Error -> _uiState.value =
+                        ProductListUiState.Error(resource.message!!)
                 }
             }
         }
     }
 
-    private fun loadProductsData() {
+    fun loadProductsData() {
         viewModelScope.launch {
             getProductListUseCase().collect { resource ->
                 _uiState.value = when (resource) {
@@ -73,11 +76,13 @@ class ProductListViewModel @Inject constructor(
                     is Resource.Success -> {
                         // Potentially show a success message here or update UI accordingly
                     }
+
                     is Resource.Error -> {
                         // Show error message to the user
                     }
+
                     is Resource.Loading -> {
-                        // You might want to show a loading indicator if this takes a while
+                        // Show a loading indicator if this takes a while
                     }
                 }
             }

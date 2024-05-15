@@ -47,9 +47,11 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.oguzhandongul.shoppingapp.core.ui.components.CoilImage
 import com.oguzhandongul.shoppingapp.core.ui.theme.Dimensions
+import com.oguzhandongul.shoppingapp.core.util.extensions.toCurrencyString
 import com.oguzhandongul.shoppingapp.features.cart.R
 import com.oguzhandongul.shoppingapp.features.cart.presentation.uistates.CartUiState
 import com.oguzhandongul.shoppingapp.features.cart.presentation.viewmodel.CartViewModel
@@ -174,15 +176,19 @@ private fun CartBottomBar(totalPrice: Double, totalItemCount: Int) {
         color = MaterialTheme.colorScheme.surface,
         contentColor = MaterialTheme.colorScheme.onSurface
     ) {
-        Column(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(Dimensions.medium),
-            verticalArrangement = Arrangement.SpaceBetween,
-            horizontalAlignment = Alignment.End
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("Total Price: $totalPrice kr")
-            Text("Total Items: $totalItemCount")
+            Text(text = "Total Price:", fontWeight = FontWeight.SemiBold)
+            Text(
+                text = "${totalPrice.toCurrencyString()} kr",
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 20.sp
+            )
         }
     }
 }
@@ -213,7 +219,7 @@ fun CartContent(
     modifier: Modifier = Modifier
 ) {
     LazyColumn(modifier = modifier) {
-        items(cartItems) { cartItem ->
+        items(cartItems, key = { item -> item.productId }) { cartItem ->
             CartItemCard(cartItem, onRemoveItem, onUpdateQuantity)
         }
     }
@@ -249,7 +255,7 @@ fun CartItemCard(
                 modifier = Modifier.weight(1f)
             ) {
                 Text(text = cartItem.product.name, fontWeight = FontWeight.Bold)
-                Text(text = "${cartItem.product.price.value} ${cartItem.product.price.currency}")
+                Text(text = "${cartItem.product.price.value.toCurrencyString()} ${cartItem.product.price.currency}")
                 // Quantity Button
                 Button(
                     onClick = { showQuantityDialog = true },

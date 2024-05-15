@@ -61,6 +61,7 @@ dependencies {
     implementation(project(":data:product"))
     implementation(project(":features:productlist"))
     implementation(project(":features:cart"))
+    implementation(project(":features:productdetail"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

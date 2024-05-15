@@ -1,11 +1,11 @@
-package com.oguzhandongul.shoppingapp.product.local
+package com.oguzhandongul.shoppingapp.product.converters
 
 import androidx.room.TypeConverter
 import com.oguzhandongul.shoppingapp.product.model.Price
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 
-class Converters {
+class PriceConverters {
 
     private val moshi = Moshi.Builder().build() // Create Moshi instance
 

@@ -1,4 +1,4 @@
-package com.oguzhandongul.shoppingapp.productlist
+package com.oguzhandongul.shoppingapp.features.productdetail
 
 import org.junit.Test
 

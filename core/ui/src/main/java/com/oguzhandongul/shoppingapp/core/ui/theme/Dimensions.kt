@@ -4,7 +4,7 @@ import androidx.compose.ui.unit.dp
 
 object Dimensions {
     /** Extra Small padding of 4.dp. Suitable for small spacing between UI elements. */
-    val xsmall = 8.dp
+    val xsmall = 4.dp
 
     /** Small padding of 8.dp. Suitable for small spacing between UI elements. */
     val small = 8.dp

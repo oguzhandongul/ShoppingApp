@@ -5,10 +5,6 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.squareup.moshi.JsonClass
 
-/**
-    Implementation :
-    val products: ProductResponse? = jsonFileParser.parseRawFileToObject(R.raw.products)
-**/
 @Entity(tableName = "products")
 @JsonClass(generateAdapter = true)
 data class Product(

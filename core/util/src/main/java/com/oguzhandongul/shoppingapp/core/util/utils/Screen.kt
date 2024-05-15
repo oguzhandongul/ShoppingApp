@@ -1,7 +1,9 @@
 package com.oguzhandongul.shoppingapp.core.util.utils
 
 sealed class Screen(val route: String) {
-    object ProductList : Screen("ProductList")
-    object ProductDetail : Screen("ProductDetail")
-    object Cart : Screen("Cart")
+    object ProductList : Screen("productList")
+    object ProductDetail : Screen("productDetail/{productId}") {
+        fun createRoute(productId: String) = "productDetail/$productId"
+    }
+    object Cart : Screen("cart")
 }

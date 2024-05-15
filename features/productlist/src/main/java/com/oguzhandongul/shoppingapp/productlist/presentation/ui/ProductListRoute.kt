@@ -1,6 +1,5 @@
 package com.oguzhandongul.shoppingapp.productlist.presentation.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,12 +9,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
@@ -27,15 +26,20 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.oguzhandongul.shoppingapp.core.ui.components.AnimatedButton
+import com.oguzhandongul.shoppingapp.core.ui.components.AnimateOnValueChange
 import com.oguzhandongul.shoppingapp.core.ui.components.CoilImage
 import com.oguzhandongul.shoppingapp.core.ui.components.ErrorView
+import com.oguzhandongul.shoppingapp.core.ui.components.ProductLabel
+import com.oguzhandongul.shoppingapp.core.ui.extensions.animatedShakeAndScale
 import com.oguzhandongul.shoppingapp.core.ui.theme.Dimensions
+import com.oguzhandongul.shoppingapp.core.util.extensions.toCurrencyString
+import com.oguzhandongul.shoppingapp.product.extensions.flatten
 import com.oguzhandongul.shoppingapp.product.model.Product
 import com.oguzhandongul.shoppingapp.productlist.R
 import com.oguzhandongul.shoppingapp.productlist.presentation.uistates.ProductListUiState
@@ -116,54 +120,80 @@ internal fun Content(
     ) { paddingValues ->
         LazyVerticalGrid(
             columns = GridCells.Fixed(2), // Two columns in the grid
-            contentPadding = PaddingValues(Dimensions.small), // Add some padding
+            contentPadding = PaddingValues(
+                Dimensions.small,
+                Dimensions.small,
+                Dimensions.small,
+                Dimensions.xxlarge
+            ), // Add some padding
             modifier = modifier.padding(paddingValues)
         ) {
-            items(items.size) { index ->
-                ProductCard(items[index], onCartItem, modifier = Modifier
+            items(items, key = { item -> item.id }) { product ->
+                ProductCard(product, onCartItem, modifier = Modifier
                     .clickable {
-                        onGoToItem(items[index].id)
+                        onGoToItem(product.id)
                     }
-                    .testTag("item_$index"))
+                )
             }
         }
     }
 }
 
 @Composable
-fun ProductCard(product: Product, onCartItem: (Product) -> Unit, modifier: Modifier) {
-    Card(
+fun ProductCard(
+    product: Product,
+    onCartItem: (Product) -> Unit,
+    modifier: Modifier
+) {
+    Box(
         modifier = modifier
-            .padding(Dimensions.small)
-            .background(color = Color.White)
             .fillMaxWidth()
-            .clickable {}
     ) {
         Column(
             modifier = Modifier
+                .padding(Dimensions.small)
                 .fillMaxWidth(),
         ) {
-            CoilImage(
-                url = product.imageUrl,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(150.dp)
-            )
+            Box(modifier = modifier) {
+                CoilImage(
+                    url = product.imageUrl,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(150.dp)
+                )
+                ProductLabel(text = product.type, modifier = Modifier.align(Alignment.TopStart))
+            }
             Column(
                 modifier = Modifier.padding(Dimensions.medium) // Padding applied here
             ) {
-                Text(text = product.name, fontWeight = FontWeight.Bold)
-                Text(text = product.type)
                 Text(
-                    text = "${product.price.value} ${product.price.currency}",
-                    fontWeight = FontWeight.Bold
+                    text = product.name,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Text(
+                    text = product.info.flatten(),
+                    fontWeight = FontWeight.Light,
+                    fontSize = 12.sp,
+                    maxLines = 1
+                )
+                Text(
+                    text = product.price.let { it.value.toCurrencyString(it.currency) },
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp
                 )
 
-                // Add to Cart Button
+
                 Spacer(modifier = Modifier.height(Dimensions.medium))
-                Button(onClick = { onCartItem(product) }) {
-                    Text(stringResource(id = R.string.label_add_to_cart))
+                Box(modifier = Modifier.fillMaxWidth()) {
+                    AnimatedButton(
+                        onClick = { onCartItem(product) },
+                        modifier = Modifier
+                            .width(60.dp)
+                            .height(40.dp)
+                            .align(Alignment.BottomEnd)
+                    )
                 }
+
             }
         }
     }
@@ -175,15 +205,17 @@ fun CartFloatingActionButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    ExtendedFloatingActionButton(
-        onClick = onClick,
-        modifier = modifier,
-        icon = {
-            Icon(
-                imageVector = Icons.Default.ShoppingCart,
-                contentDescription = "Shopping Cart"
-            )
-        },
-        text = { Text("Cart ($itemCount)") } // Include item count in the text
-    )
+    AnimateOnValueChange(itemCount) { shouldAnimate ->
+        ExtendedFloatingActionButton(
+            onClick = onClick,
+            modifier = modifier.animatedShakeAndScale(shouldAnimate = shouldAnimate),
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.ShoppingCart,
+                    contentDescription = "Shopping Cart"
+                )
+            },
+            text = { Text("Cart ($itemCount)") }
+        )
+    }
 }
